@@ -1,7 +1,7 @@
 import datetime
 import calendar
 import pandasdmx
-from flask import Flask, request, send_file, abort, render_template
+from flask import Flask, render_template
 
 #https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
 #https://pandasdmx.readthedocs.io/en/v1.0/
