@@ -17,7 +17,7 @@ def index():
 			monthStr = f'{month}' if month > 9 else f'0{month}'
 			startPeriod = f'{year}-{monthStr}-01'
 			endPeriod = f'{year}-{monthStr}-{calendar.monthrange (year=year, month=month)[1]}'
-			data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod})
+			data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True})
 			data = data_response.data
 			sum = 0.0
 			for s in data[0].series[0] :
