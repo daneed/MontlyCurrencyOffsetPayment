@@ -44,10 +44,10 @@ def index():
 	if refAvg >= actAvg :
 		print ('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
 	else:
-		mcop_multiplier_unrounded = (actAvg - refAvg) / refAvg
+		mcop_multiplier = (actAvg - refAvg) / refAvg
 		print (f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
 
-	return render_template("index.html", year = year, month=monthName, mcop_multiplier = float(f'{mcop_multiplier_unrounded:.4f}'));  
+	return render_template("index.html", year = year, month=monthName, mcop_multiplier=mcop_multiplier);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
