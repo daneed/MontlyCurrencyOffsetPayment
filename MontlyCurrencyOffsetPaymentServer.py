@@ -16,7 +16,7 @@ def index():
 			#megnezni, hogy a 400 ala esik valaha az euro. ha igen, akkor ez lesz az uj reference. Ezt mondta ugyanis Huw...
 			refYear=2022
 			refMonth=5
-			refAvg=self.calculate(refYear, refMonth)
+			refAvg=385 #vagy: self.calculate(refYear, refMonth)?
 			launchYear=2022
 			launchMonth=10
 			for y in range (launchYear, year + 1) :
@@ -64,6 +64,6 @@ def index():
 	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg);  
 
 
-app.run (host="0.0.0.0", threaded=True,port="33334")
+app.run (host="0.0.0.0", threaded=True,port="33333")
 
 
