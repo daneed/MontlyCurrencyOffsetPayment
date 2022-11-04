@@ -55,8 +55,11 @@ def index():
 		print(f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
 	
 	ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-	addr = socket.gethostbyaddr(ip)
-	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr[0]);  
+	try:
+		addr = socket.gethostbyaddr(ip)[0]
+	except:
+		addr = "unknown"
+	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
