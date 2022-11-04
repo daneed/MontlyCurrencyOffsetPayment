@@ -50,6 +50,6 @@ def index():
 	return render_template("index.html", year=year, month=monthName, refAvg=refAvg, actAvg=actAvg);  
 
 
-app.run (host="0.0.0.0", threaded=True,port="33334")
+app.run (host="0.0.0.0", threaded=True,port="33333")
 
 
