@@ -1,48 +1,125 @@
 <!DOCTYPE html>
 <html>
 
+{% if (refAvg >= actAvg) %}
+{%	set mcop_multiplier=0 %}
+{% else %}
+{%	set mcop_multiplier=(actAvg - refAvg)/refAvg %}
+{% endif %}
+{% set mcop_rate="%.2f"|format (mcop_multiplier * 100)|float %}
+
 <head>
     <title>Monthly Currency Offset Payment</title>
 	<style>
-		p.BIG {
-		  font-weight: bold;
-		  font-size: 100px;
-		  color: crimson;
-		  padding: 0px;
-		  margin: 5px;
-		  text-align: center;
+		body, p {
+			text-align: center;
+			padding: 0px;
+			margin: 5px;
 		}
-		p.MEDIUM {
-		  font-weight: bold;
-		  font-size: 35px;
-		  padding: 0px;
-		  margin: 5px;
+		table, th, td {
+			margin-left: auto;
+			margin-right: auto;
+			border: 1px solid black;
+			border-collapse: collapse;
+			text-align: left;
+			padding: 5px;
 		}
-		p.SMALL {
-		  font-weight: lighter;
-		  font-size: 20px;
-		  padding: 00px;
-		  margin: 5px;
+		.BIG {
+		 	font-weight: bold;
+		 	font-size: 100px;
+		}
+		.BIG.RED {
+		  	color: crimson;
+		}
+		.MEDIUM {
+		  	font-weight: bold;
+		  	font-size: 35px;
+		}
+		table, .SMALL {
+		  	font-weight: lighter;
+		  	font-size: 20px;
+		}
+		.SMALL.RED {
+		  	font-weight: bold;
+			color: crimson;
 		}
 	</style>
 </head>
 
 <body>
-	<p class="MEDIUM">Monthly Currency Offset Payment Multiplier for {{year}}.{{month}} is:</p> <p class="BIG">{{"%.4f"|format (mcop_multiplier)}}</p>
-	<p class="SMALL">For  100.000 HUF, the Monthly Currency Offset Payment is: {{ (100000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  200.000 HUF, the Monthly Currency Offset Payment is: {{ (200000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  300.000 HUF, the Monthly Currency Offset Payment is: {{ (300000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  400.000 HUF, the Monthly Currency Offset Payment is: {{ (400000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  500.000 HUF, the Monthly Currency Offset Payment is: {{ (500000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  600.000 HUF, the Monthly Currency Offset Payment is: {{ (600000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  700.000 HUF, the Monthly Currency Offset Payment is: {{ (700000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  800.000 HUF, the Monthly Currency Offset Payment is: {{ (800000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For  900.000 HUF, the Monthly Currency Offset Payment is: {{ (900000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For 1.000.000 HUF, the Monthly Currency Offset Payment is: {{(1000000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For 1.200.000 HUF, the Monthly Currency Offset Payment is: {{(1200000 * mcop_multiplier)|round|int}} HUF</p>
-	<p class="SMALL">For 1.500.000 HUF, the Monthly Currency Offset Payment is: {{(1500000 * mcop_multiplier)|round|int}} HUF</p>
-
-	
+	<table>
+		<tr>
+			<td rowspan="2">
+				<b>HUF-EUR exchange rate</b>
+			</td>
+			<td>
+				<b>2022.May</b>
+			</td>
+			<td class="SMALL RED">
+				{{"%.2f"|format (refAvg)}}
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<b>{{year}}.{{month}}</b>
+			</td>
+			<td class="SMALL RED">
+				{{"%.2f"|format (actAvg)}}
+			</td>
+		</tr>
+	</table>
+	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{year}}.{{month}} is:</p> <p class="BIG RED">{{mcop_rate}}%</p>
+	<table>
+		<tr>
+			<td>For  100.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (1000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  200.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (2000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  300.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (4000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  400.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (4000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  500.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (5000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  600.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (6000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  700.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (7000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  800.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (8000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For  900.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (9000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For 1.000.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (10000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For 1.200.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (12000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+		<tr>
+			<td>For 1.500.000 HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ (15000 * mcop_rate)|round|int}} HUF</td>
+		</tr>
+	</table>
+	<p>©Daniel Serly</p>
 </body>
 
 </html>

@@ -42,12 +42,12 @@ def index():
 	monthName = datetime.date(year, month, 1).strftime("%B")
 
 	if refAvg >= actAvg :
-		print ('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
+		print('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
 	else:
 		mcop_multiplier = (actAvg - refAvg) / refAvg
-		print (f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
+		print(f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
 
-	return render_template("index.html", year = year, month=monthName, mcop_multiplier=mcop_multiplier);  
+	return render_template("index.html", year=year, month=monthName, refAvg=refAvg, actAvg=actAvg);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
