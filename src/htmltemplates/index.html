@@ -70,54 +70,13 @@
 	</table>
 	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{year}}.{{month}} is:</p> <p class="BIG RED">{{mcop_rate}}%</p>
 	<table>
+		{%set amounts = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1200, 1500]%}
+		{% for amount in amounts %}
 		<tr>
-			<td>For  100.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (1000 * mcop_rate)|round|int}} HUF</td>
+			<td>For {{"{:,}".format(amount * 1000)}} HUF, the Monthly Currency Offset Payment is:</td>
+			<td>{{ "{:,}".format((amount * 10 * mcop_rate)|round|int)}} HUF</td>
 		</tr>
-		<tr>
-			<td>For  200.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (2000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  300.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (4000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  400.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (4000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  500.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (5000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  600.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (6000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  700.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (7000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  800.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (8000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For  900.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (9000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For 1.000.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (10000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For 1.200.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (12000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
-		<tr>
-			<td>For 1.500.000 HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ (15000 * mcop_rate)|round|int}} HUF</td>
-		</tr>
+		{% endfor %}
 	</table>
 	<p>©Daniel Serly</p>
 </body>
