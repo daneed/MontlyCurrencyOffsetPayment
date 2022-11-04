@@ -1,7 +1,8 @@
 import datetime
 import calendar
 import pandasdmx
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+import socket
 
 #https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
 #https://pandasdmx.readthedocs.io/en/v1.0/
@@ -52,8 +53,10 @@ def index():
 	else:
 		mcop_multiplier = (actAvg - refAvg) / refAvg
 		print(f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
-
-	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg);  
+	
+	ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+	addr = socket.gethostbyaddr(ip)
+	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr[0]);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
