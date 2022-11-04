@@ -13,21 +13,13 @@ app = Flask(__name__, template_folder='src/htmltemplates')
 def index():
 	class MonthlyAverageCalculator (object):
 		def calculateRefAvg (self, year, month):
-			#megnezni, hogy a 400 ala esik valaha az euro. ha igen, akkor ez lesz az uj reference. Ezt mondta ugyanis Huw...
-			refYear=2022
-			refMonth=5
-			refAvg=385 #vagy: self.calculate(refYear, refMonth)?
-			launchYear=2022
-			launchMonth=10
-			for y in range (launchYear, year + 1) :
-				for m in range (launchMonth, month + 1) :
+			#megnezni, hogy a 400 ala esik valaha az euro. ha igen, akkor 400 lesz az uj reference. Ezt mondta ugyanis Huw...
+			for y in range (2022, year + 1) :
+				for m in range (10, month + 1) :
 					avg = self.calculate(y, m)
-					if refAvg is None or avg < 400 :
-						refYear=y
-						refMonth=m
-						refAvg = avg
-						#SD: vajon itt return-olni kellene, azaz: az elso ilyet kellene hasznalni? Vagy, hagyni vegigfutni?
-			return refYear, refMonth, refAvg
+					if avg < 400 :
+						return y, m, 400
+			return 2022, 5, 385
 
 		def calculate (self, year, month):
 			ecb = pandasdmx.Request('ECB')
