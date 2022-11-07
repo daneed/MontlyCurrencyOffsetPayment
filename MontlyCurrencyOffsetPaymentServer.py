@@ -1,6 +1,5 @@
 import datetime
 import calendar
-from distutils.log import debug
 import pandasdmx
 from flask import Flask, render_template, request
 import socket
