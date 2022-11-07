@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html>
-{% if (actAvg < 400) %}
-{% set usedActcualAvg = 400 %}
-{% else %}
-{% set usedActcualAvg = actAvg %}
-{% endif %}
-{% if (refAvg >= usedActcualAvg) %}
-{%	set mcop_multiplier=0 %}
-{% else %}
-{%	set mcop_multiplier=(usedActcualAvg - refAvg)/refAvg %}
-{% endif %}
+{% set useOverriddenActualAvg = false if (actAvg >= 400) else true %}
+{% set usedActualAvg = actAvg if (useOverriddenActualAvg == false) else 400 %}
+{% set mcop_multiplier=0 if (refAvg >= usedActualAvg) else (usedActualAvg - refAvg)/refAvg %}
 {% set mcop_rate="%.2f"|format (mcop_multiplier * 100)|float %}
 
 <head>
@@ -60,7 +53,7 @@
 				<b>HUF-EUR exchange rate</b>
 			</td>
 			<td>
-				<b>{{refYear}}.{{refMonth}} (reference month)</b>
+				<b>{{refYear}}.{{refMonth}} (ref. month)</b>
 			</td>
 			<td class="SMALL RED">
 				{{"%.2f"|format (refAvg)}}
@@ -72,9 +65,9 @@
 			</td>
 			<td class="SMALL RED">
 				{{"%.2f"|format (actAvg)}}
-			{% if (usedAvg > actAvg) %}
-				(Overridden to 400!)
-			{% endif %}
+				{% if (useOverriddenActualAvg) %}
+					(Overridden to 400!)
+				{% endif %}
 			</td>
 		</tr>
 	</table>

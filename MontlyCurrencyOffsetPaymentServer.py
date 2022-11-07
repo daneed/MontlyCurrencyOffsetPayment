@@ -24,14 +24,12 @@ def index():
 			monthStr = f'{month}' if month > 9 else f'0{month}'
 			startPeriod = f'{year}-{monthStr}-01'
 			endPeriod = f'{year}-{monthStr}-{calendar.monthrange (year=year, month=month)[1]}'
-			data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True})
+			data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True}, dsd=ecb.dataflow('EXR').structure.ECB_EXR1)
 			data = data_response.data
 			sum = 0.0
 			for s in data[0].series[0] :
 				sum += float (s.value)
-			avg = sum / len (data[0].series[0])
-			usedAvg = avg if avg <= 400 else 400
-			return avg, usedAvg
+			return sum / len (data[0].series[0])
 
 	monthlyAverageCalculator = MonthlyAverageCalculator ()
 
@@ -40,7 +38,7 @@ def index():
 	year = now.year if month < 12 else now.year - 1
 	
 	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=year, month=month)
-	actAvg, usedAvg = monthlyAverageCalculator.calculate (year=year, month=month)
+	actAvg = monthlyAverageCalculator.calculate (year=year, month=month)
 	
 	mcop_multiplier = 0.0
 	monthName = datetime.date(year, month, 1).strftime("%B")
@@ -59,7 +57,7 @@ def index():
 		addr = ip
 
 	app.logger.info(f'[{now.strftime ("%d/%b/%y %H:%M:%S")}] Request from machine {addr}')
-	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, usedAvg = usedAvg, addr=addr);  
+	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
