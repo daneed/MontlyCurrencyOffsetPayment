@@ -1,14 +1,17 @@
 import datetime
 import calendar
+from distutils.log import debug
 import pandasdmx
 from flask import Flask, render_template, request
 import socket
+import logging
+
 
 #https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
 #https://pandasdmx.readthedocs.io/en/v1.0/
 
+logging.basicConfig(filename='record.log', level=logging.INFO)
 app = Flask(__name__, template_folder='src/htmltemplates')
-
 
 @app.route("/")
 def index():
@@ -58,7 +61,9 @@ def index():
 	try:
 		addr = socket.gethostbyaddr(ip)[0]
 	except:
-		addr = "unknown"
+		addr = ip
+
+	app.logger.info(f'[{now.strftime ("%d/%b/%y %H:%M:%S")}] Request from machine {addr}')
 	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr);  
 
 

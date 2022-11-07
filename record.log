@@ -1,0 +1,48 @@
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[2022-11-07 09:31:31.093084] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:31:32] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[2022-11-07 09:32:31.738583] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:32:32] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[2022/35/07 09:35:30] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:35:30] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[07/11/22 09:40:16] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:40:17] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[07/November/22 09:40:59] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:41:00] "GET / HTTP/1.1" 200 -
+INFO:werkzeug: * Running on all addresses (0.0.0.0)
+   WARNING: This is a development server. Do not use it in a production deployment.
+ * Running on http://127.0.0.1:33334
+ * Running on http://172.16.25.188:33334 (Press CTRL+C to quit)
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:pandasdmx.reader.sdmxml:Use supplied dsd=… argument for non–structure-specific message
+INFO:MontlyCurrencyOffsetPaymentServer:[07/Nov/22 09:41:34] Request from machine serlyd-w10.graphisoft.hu
+INFO:werkzeug:172.16.25.188 - - [07/Nov/2022 09:41:35] "GET / HTTP/1.1" 200 -
