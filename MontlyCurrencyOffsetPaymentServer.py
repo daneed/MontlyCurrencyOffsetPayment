@@ -10,6 +10,9 @@ import logging
 #https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
 #https://pandasdmx.readthedocs.io/en/v1.0/
 
+werkzeuglog=logging.getLogger('werkzeug')
+werkzeuglog.setLevel(logging.ERROR)
+
 logging.basicConfig(filename='record.log', level=logging.INFO)
 app = Flask(__name__, template_folder='src/htmltemplates')
 
