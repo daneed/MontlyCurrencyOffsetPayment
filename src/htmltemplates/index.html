@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html>
-
-{% if (refAvg >= actAvg) %}
+{% if (actAvg < 400) %}
+{% set usedActcualAvg = 400 %}
+{% else %}
+{% set usedActcualAvg = actAvg %}
+{% endif %}
+{% if (refAvg >= usedActcualAvg) %}
 {%	set mcop_multiplier=0 %}
 {% else %}
-{%	set mcop_multiplier=(actAvg - refAvg)/refAvg %}
+{%	set mcop_multiplier=(usedActcualAvg - refAvg)/refAvg %}
 {% endif %}
 {% set mcop_rate="%.2f"|format (mcop_multiplier * 100)|float %}
 
@@ -68,6 +72,9 @@
 			</td>
 			<td class="SMALL RED">
 				{{"%.2f"|format (actAvg)}}
+			{% if (usedAvg > actAvg) %}
+				(Overridden to 400!)
+			{% endif %}
 			</td>
 		</tr>
 	</table>

@@ -17,12 +17,6 @@ app = Flask(__name__, template_folder='src/htmltemplates')
 def index():
 	class MonthlyAverageCalculator (object):
 		def calculateRefAvg (self, year, month):
-			#megnezni, hogy a 400 ala esik valaha az euro. ha igen, akkor 400 lesz az uj reference. Ezt mondta ugyanis Huw...
-			for y in range (2022, year + 1) :
-				for m in range (10, month + 1) :
-					avg = self.calculate(y, m)
-					if avg < 400 :
-						return y, m, 400
 			return 2022, 5, 385
 
 		def calculate (self, year, month):
@@ -36,7 +30,8 @@ def index():
 			for s in data[0].series[0] :
 				sum += float (s.value)
 			avg = sum / len (data[0].series[0])
-			return avg
+			usedAvg = avg if avg <= 400 else 400
+			return avg, usedAvg
 
 	monthlyAverageCalculator = MonthlyAverageCalculator ()
 
@@ -45,7 +40,7 @@ def index():
 	year = now.year if month < 12 else now.year - 1
 	
 	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=year, month=month)
-	actAvg = monthlyAverageCalculator.calculate (year=year, month=month)
+	actAvg, usedAvg = monthlyAverageCalculator.calculate (year=year, month=month)
 	
 	mcop_multiplier = 0.0
 	monthName = datetime.date(year, month, 1).strftime("%B")
@@ -64,7 +59,7 @@ def index():
 		addr = ip
 
 	app.logger.info(f'[{now.strftime ("%d/%b/%y %H:%M:%S")}] Request from machine {addr}')
-	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr);  
+	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, usedAvg = usedAvg, addr=addr);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
