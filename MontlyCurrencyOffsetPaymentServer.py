@@ -31,27 +31,42 @@ def index():
 			sum = 0.0
 			for s in data[0].series[0] :
 				sum += float (s.value)
-			return sum / len (data[0].series[0])
+			return sum / len (data[0].series[0]) if len (data) > 0 and len (data[0].series[0]) > 0 else 0
 
 	monthlyAverageCalculator = MonthlyAverageCalculator ()
 
 	now = datetime.datetime.now ()
-	month = now.month - 1 if now.month > 1 else 12
-	year = now.year if month < 12 else now.year - 1
+	relevantMonth = now.month - 2 if now.month > 2 else 12
+	relevantYear = now.year if relevantMonth < 12 else now.year - 1
 	
-	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=year, month=month)
-	actAvg = monthlyAverageCalculator.calculate (year=year, month=month)
-	
-	mcop_multiplier = 0.0
-	monthName = datetime.date(year, month, 1).strftime("%B")
-	refMonthName = datetime.date(refYear, refMonth, 1).strftime("%B")
+	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=relevantYear, month=relevantMonth)
+	relevantAvg = monthlyAverageCalculator.calculate (year=relevantYear, month=relevantMonth)
+	currAvg = monthlyAverageCalculator.calculate (year=now.year, month=now.month)
 
-	if refAvg >= actAvg :
+	prevMonth = now.month - 1 if now.month > 1 else 12
+	prevYear = now.year if prevMonth < 12 else now.year - 1
+	prevAvg = monthlyAverageCalculator.calculate (year=prevYear, month=prevMonth)
+	
+	
+	refMonthName = datetime.date(refYear, refMonth, 1).strftime("%B")
+	relevantMonthName = datetime.date(relevantYear, relevantMonth, 1).strftime("%B")
+	prevMonthName = datetime.date(prevYear, prevMonth, 1).strftime("%B")
+	monthName =  now.strftime("%B")
+
+	'''relevantMcopMultiplier = 0.0
+	if refAvg >= relevantAvg :
 		print('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
 	else:
-		mcop_multiplier = (actAvg - refAvg) / refAvg
-		print(f'Monthly Currency Offset Payment Multiplier in {year}.{monthName} is: {mcop_multiplier}')
-	
+		relevantMcopMultiplier = (relevantAvg - refAvg) / refAvg
+		print(f'Monthly Currency Offset Payment Multiplier in {relevantYear}.{relevantMonthName} is: {relevantMcopMultiplier}')
+
+	prevMcopMultiplier = 0.0
+	if refAvg >= prevAvg :
+		print('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
+	else:
+		prevMcopMultiplier = (prevAvg - refAvg) / refAvg
+		print(f'Monthly Currency Offset Payment Multiplier in {prevYear}.{prevMonthName} is: {prevMcopMultiplier}')'''
+
 	ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
 	try:
 		addr = socket.gethostbyaddr(ip)[0]
@@ -59,7 +74,13 @@ def index():
 		addr = ip
 
 	app.logger.info(f'[{now.strftime ("%d/%b/%y %H:%M:%S")}] Request from machine {addr}')
-	return render_template("index.html", refYear=refYear, refMonth=refMonthName, year=year, month=monthName, refAvg=refAvg, actAvg=actAvg, addr=addr);  
+	return render_template(
+		"index.html",
+		refYear=refYear, refMonth=refMonthName, refAvg=refAvg,
+		relevantYear=relevantYear, relevantMonth=relevantMonthName, relevantAvg=relevantAvg,
+		prevYear=prevYear,prevMonth=prevMonthName, prevAvg=prevAvg,
+		currYear=now.year, currMonth=monthName, currAvg=currAvg,
+		addr=addr);  
 
 
 app.run (host="0.0.0.0", threaded=True,port="33333")
