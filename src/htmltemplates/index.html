@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
+{% if (relevantAvg == -1) %}
+{% set relevantMcopRate=-1 %}
+{% else %}
 {% set useOverriddenRelevantAvg = false if (relevantAvg >= 400) else true %}
 {% set usedRelevantAvg = relevantAvg if (useOverriddenRelevantAvg == false) else 400 %}
 {% set relevantMcopMultiplier=0 if (refAvg >= usedRelevantAvg) else (usedRelevantAvg - refAvg)/refAvg %}
 {% set relevantMcopRate="%.3f"|format (relevantMcopMultiplier * 100)|float %}
+{% endif %}
 
+{% if (prevAvg == -1) %}
+{% set prevMcopRate=-1 %}
+{% else %}
 {% set useOverriddenPrevAvg = false if (prevAvg >= 400) else true %}
 {% set usedPrevAvg = prevAvg if (useOverriddenPrevAvg == false) else 400 %}
 {% set prevMcopMultiplier=0 if (refAvg >= usedPrevAvg) else (usedPrevAvg - refAvg)/refAvg %}
 {% set prevMcopRate="%.3f"|format (prevMcopMultiplier * 100)|float %}
+{% endif %}
 
+{% if (currAvg == -1) %}
+{% set currMcopRate=-1 %}
+{% else %}
 {% set useOverriddenCurrAvg = false if (currAvg >= 400) else true %}
 {% set usedCurrAvg = currAvg if (useOverriddenCurrAvg == false) else 400 %}
 {% set currMcopMultiplier=0 if (refAvg >= usedCurrAvg) else (usedCurrAvg - refAvg)/refAvg %}
 {% set currMcopRate="%.3f"|format (currMcopMultiplier * 100)|float %}
+{% endif %}
 
 <head>
     <title>M.C.O.P. Calculator</title>
@@ -92,49 +104,64 @@
 					<b>{{relevantYear}}. {{relevantMonth}} (relevant month)</b>
 				</td>
 				<td class="SMALL RED">
-					{{"%.2f"|format (relevantAvg)}}
-					{% if (useOverriddenRelevantAvg) %}
-						(Overridden to 400!)
+					{% if relevantAvg==-1 %}
+						ERROR
+					{% else %}
+						{{"%.2f"|format (relevantAvg)}}
+						{% if (useOverriddenRelevantAvg) %}
+							(Overridden to 400!)
+						{% endif %}
 					{% endif %}
 				</td>
-				<td class="SMALL RED">{{relevantMcopRate}}</td>
+				<td class="SMALL RED">{% if relevantAvg==-1 %}ERROR{% else %}{{relevantMcopRate}}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>
 					{{prevYear}}. {{prevMonth}} (previous month)
 				</td>
-				<td>
-					{{"%.2f"|format (prevAvg)}}
-					{% if (useOverriddenPrevAvg) %}
-						(Overridden to 400!)
-					{% endif %}
-				</td>
-				<td>{{prevMcopRate}}</td>
+				{% if prevAvg==-1 %}
+					<td class="SMALL RED">ERROR</td>
+				{% else %}
+					<td>
+						{{"%.2f"|format (prevAvg)}}
+						{% if (useOverriddenPrevAvg) %}
+							(Overridden to 400!)
+						{% endif %}
+					</td>
+				{% endif %}
+				<td>{% if prevAvg==-1 %}ERROR{% else %}{{prevMcopRate}}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>
 					<i>{{currYear}}. {{currMonth}} (actual month)</i>
 				</td>
-				<td>
-					<i>{{"%.2f"|format (currAvg)}}</i>
-					{% if (useOverriddenCurrAvg) %}
-						(Overridden to 400!)
+					{% if currAvg==-1 %}
+						<td class="SMALL RED">ERROR</td>
+					{% else %}
+						<td>
+							<i>{{"%.2f"|format (currAvg)}}</i>
+							{% if (useOverriddenCurrAvg) %}
+								(Overridden to 400!)
+							{% endif %}
+						</td>
 					{% endif %}
-				</td>
-				<td><i>{{currMcopRate}}</i></td>
+				
+				<td><i>{% if currAvg==-1 %}ERROR{% else %}{{currMcopRate}}{% endif %}</i></td>
 			</tr>
 		</tbody>
 	</table>
-	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{currYear}}. {{currMonth}} is:</p> <p class="BIG RED">{{relevantMcopRate}}%</p>
-	<table>
-		{%set amounts = [100, 500, 800, 1000, 1200, 1500, 2000]%}
-		{% for amount in amounts %}
-		<tr>
-			<td>For {{"{:,}".format(amount * 1000)}} HUF, the Monthly Currency Offset Payment is:</td>
-			<td>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{currYear}}. {{currMonth}} is:</p> <p class="BIG RED">{% if relevantAvg==-1 %}ERROR{% else %}{{relevantMcopRate}}%{% endif %}</p>
+	{% if relevantAvg !=-1 %}
+		<table>
+			{%set amounts = [100, 500, 800, 1000, 1200, 1500, 2000]%}
+			{% for amount in amounts %}
+			<tr>
+				<td>For {{"{:,}".format(amount * 1000)}} HUF, the Monthly Currency Offset Payment is:</td>
+				<td>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</td>
+			</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
 	<p>©<a href="mailto:daneedtools@gmail.com" target="_blank">Daniel Serly</a> | <a href="https://github.com/daneed/MontlyCurrencyOffsetPayment" target="_blank">GitHub</a></p>
 	<p class="SMALL RED">NOTE: The real value is calculated by the Finance Department, their calculation is the relevant, not this one!</p>
 </body>

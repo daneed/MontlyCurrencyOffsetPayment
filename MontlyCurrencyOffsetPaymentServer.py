@@ -29,20 +29,30 @@ class MonthlyAverageCalculator (object):
 			if str (month) in self._dict[str (year)]:
 				return self._dict[str (year)][str (month)]
 
-		ecb = pandasdmx.Request('ECB')
+		return self._calculate_with_retries (retryCount=3, year=year, month=month, useCache=useCache)
+
+	def _calculate_with_retries (self, retryCount, year, month, useCache) :
 		monthStr = f'{month}' if month > 9 else f'0{month}'
 		startPeriod = f'{year}-{monthStr}-01'
 		endPeriod = f'{year}-{monthStr}-{calendar.monthrange (year=year, month=month)[1]}'
-		data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True}, dsd=ecb.dataflow('EXR').structure.ECB_EXR1)
-		data = data_response.data
-		sum = 0.0
-		for s in data[0].series[0] :
-			sum += float (s.value)
-		retVal = sum / len (data[0].series[0]) if len (data) > 0 and len (data[0].series[0]) > 0 else 0
-		if useCache:
-			self._dict[str(year)][str (month)]= retVal
 
-		return retVal
+		for i in range (retryCount) :
+			try:
+				print (f'pandasdmx.Request: {i+1}.try')
+				ecb = pandasdmx.Request('ECB', backend='memory', timeout=2)
+				data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True}, dsd=ecb.dataflow('EXR').structure.ECB_EXR1)
+				data = data_response.data
+				sum = 0.0
+				for s in data[0].series[0] :
+					sum += float (s.value)
+				retVal = sum / len (data[0].series[0]) if len (data) > 0 and len (data[0].series[0]) > 0 else 0
+				if useCache:
+					self._dict[str(year)][str (month)]= retVal
+				return retVal
+			except Exception as e:
+				print (e)
+		return -1
+		
 
 monthlyAverageCalculator = MonthlyAverageCalculator ()
 
@@ -54,38 +64,23 @@ def index():
 	
 	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=relevantYear, month=relevantMonth)
 	relevantAvg = monthlyAverageCalculator.calculate (year=relevantYear, month=relevantMonth, useCache=True)
-	currAvg = monthlyAverageCalculator.calculate (year=now.year, month=now.month)
+	if relevantAvg == -1:
+		currAvg = -1
+	else:
+		currAvg = monthlyAverageCalculator.calculate (year=now.year, month=now.month)
 
 	prevMonth = now.month - 1 if now.month > 1 else 12
 	prevYear = now.year if prevMonth < 12 else now.year - 1
-	prevAvg = monthlyAverageCalculator.calculate (year=prevYear, month=prevMonth, useCache=True)
+	if relevantAvg == -1:
+		prevAvg = -1
+	else:
+		prevAvg = monthlyAverageCalculator.calculate (year=prevYear, month=prevMonth, useCache=True)
 	
 	
 	refMonthName = datetime.date(refYear, refMonth, 1).strftime("%B")
 	relevantMonthName = datetime.date(relevantYear, relevantMonth, 1).strftime("%B")
 	prevMonthName = datetime.date(prevYear, prevMonth, 1).strftime("%B")
 	monthName =  now.strftime("%B")
-
-	'''relevantMcopMultiplier = 0.0
-	if refAvg >= relevantAvg :
-		print('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
-	else:
-		relevantMcopMultiplier = (relevantAvg - refAvg) / refAvg
-		print(f'Monthly Currency Offset Payment Multiplier in {relevantYear}.{relevantMonthName} is: {relevantMcopMultiplier}')
-
-	prevMcopMultiplier = 0.0
-	if refAvg >= prevAvg :
-		print('Monthly Currency Offset Payment is: 0!!! HUF rocks! Orban is the king!')
-	else:
-		prevMcopMultiplier = (prevAvg - refAvg) / refAvg
-		print(f'Monthly Currency Offset Payment Multiplier in {prevYear}.{prevMonthName} is: {prevMcopMultiplier}')'''
-
-	'''ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-	try:
-		addr = socket.gethostbyaddr(ip)[0]
-	except:
-		addr = ip
-	app.logger.info(f'[{now.strftime ("%d/%b/%y %H:%M:%S")}] Request from machine {addr}')'''
 
 	return render_template(
 		"index.html",
