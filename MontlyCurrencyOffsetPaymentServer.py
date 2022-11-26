@@ -35,7 +35,7 @@ class MonthlyAverageCalculator (object):
 		monthStr = f'{month}' if month > 9 else f'0{month}'
 		startPeriod = f'{year}-{monthStr}-01'
 		endPeriod = f'{year}-{monthStr}-{calendar.monthrange (year=year, month=month)[1]}'
-
+		print (f'Requesting data from European Central Bank for year {year}. {datetime.date(year, month, 1).strftime("%B")}...')
 		for i in range (retryCount) :
 			try:
 				print (f'pandasdmx.Request: {i+1}.try')
