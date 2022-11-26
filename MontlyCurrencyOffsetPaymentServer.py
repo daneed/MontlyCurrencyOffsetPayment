@@ -29,7 +29,7 @@ class MonthlyAverageCalculator (object):
 			if str (month) in self._dict[str (year)]:
 				return self._dict[str (year)][str (month)]
 
-		return self._calculate_with_retries (retryCount=3, year=year, month=month, useCache=useCache)
+		return self._calculate_with_retries (retryCount=10, year=year, month=month, useCache=useCache)
 
 	def _calculate_with_retries (self, retryCount, year, month, useCache) :
 		monthStr = f'{month}' if month > 9 else f'0{month}'
