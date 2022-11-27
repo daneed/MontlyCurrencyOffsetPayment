@@ -77,7 +77,6 @@ def index():
 		prevYear=prevYear,prevMonth=prevMonthName, prevAvg=prevAvg,
 		currYear=now.year, currMonth=monthName, currAvg=currAvg)
 
-
 app.run (host="0.0.0.0", threaded=False,port=33333)
 
 
