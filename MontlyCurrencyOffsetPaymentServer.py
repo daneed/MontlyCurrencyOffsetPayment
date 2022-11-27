@@ -1,8 +1,7 @@
 import datetime
 import calendar
 import pandasdmx
-from flask import Flask, render_template#, request
-#import socket
+from flask import Flask, render_template
 import logging
 
 #https://www.datacareer.de/blog/accessing-ecb-exchange-rate-data-in-python/
@@ -11,7 +10,6 @@ import logging
 werkzeuglog=logging.getLogger('werkzeug')
 werkzeuglog.setLevel(logging.ERROR)
 
-#logging.basicConfig(filename='record.log', level=logging.INFO)
 app = Flask(__name__, template_folder='src/htmltemplates')
 
 class MonthlyAverageCalculator (object):
