@@ -3,7 +3,7 @@ A script python 3-al fut, tehát python 3 az kell hozzá.
 Telepites:
         töldsd le az egész MontlyCurrencyOffsetPayment mappa tartalmát. Ezt a [<>Code] fül alatt tudod megtenni: download zip.
 	nyiss egy terminált a MontlyCurrencyOffsetPayment mappaban es:
-	pip3 install -e . vagy py -m pip install -e .
+	'pip3 install -e .' vagy 'py -m pip install -e .' Vagy: 'python3 -m pip install -e .' Vagy 'python -m pip install -e .' . Nyilván aposztrof nélkül.
 	Ez felrakja editable modban packagekent.
 
 Ajanlott szerkeszto a VSCode
