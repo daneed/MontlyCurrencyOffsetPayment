@@ -1,16 +1,17 @@
-A script python 3-al fut
+A script python 3-al fut, tehát python 3 az kell hozzá.
 
 Telepites:
-	nyiss egy shellt a MontlyCurrencyOffsetPayment mappaban es:
-	pip3 install -e . vagy py -m pip install -e .
+        töldsd le az egész MontlyCurrencyOffsetPayment mappa tartalmát. Ezt a [<>Code] fül alatt tudod megtenni: download zip.
+	nyiss egy terminált a MontlyCurrencyOffsetPayment mappaban es:
+	'pip3 install -e .' vagy 'py -m pip install -e .' Vagy: 'python3 -m pip install -e .' Vagy 'python -m pip install -e .' . Nyilván aposztrof nélkül.
 	Ez felrakja editable modban packagekent.
 
-Ajanlott szerkeszto a VSCode
+Ajanlott szerkeszto a VSCode. ez javasolt debuggolásra is, az alábbiak szerint:
 	- VSCode for Insiders-et telepitsed (ne a sima VSCode-t)
 	- Kell a Python Extension, meg a Pylance, utobbi elsovel egyutt feltelepul.
-	- Valamint, be kell allitani VScode-ban is, hogy NE Python 2.7-tel akarjon futtatni, hanem Python 3.6 felettivel.
+	- Debuggolás: be kell allitani VScode-ban is, hogy NE Python 2.7-tel akarjon futtatni, hanem Python 3.6 felettivel.
 		Ehhez:
 		1. View/Command Palette-t nyisd meg,
 		2. Ott a 'Python: Select Interpeter'-t válaszd, és állítsd át a python 3.6 felettire.
 
-Futtatás: py MontlyCurrencyOffsetPayment.py
+Futtatás: py MontlyCurrencyOffsetPayment.py. Vagy python3 MontlyCurrencyOffsetPayment.py. Vagy pyhton MontlyCurrencyOffsetPayment.py. Amelyik működik ezek közül.
