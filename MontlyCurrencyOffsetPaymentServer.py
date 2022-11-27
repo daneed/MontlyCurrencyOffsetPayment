@@ -78,6 +78,6 @@ def index():
 		currYear=now.year, currMonth=monthName, currAvg=currAvg)
 
 
-app.run (host="0.0.0.0", threaded=False,port="33333")
+app.run (host="0.0.0.0", threaded=False,port=33333)
 
 
