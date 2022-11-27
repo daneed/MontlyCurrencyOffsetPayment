@@ -1,7 +1,7 @@
 A script python 3-al fut
 
 Telepites:
-	nyiss egy shellt a MontlyCurrencyOffsetPayment mappaban es:
+	nyiss egy terminált a MontlyCurrencyOffsetPayment mappaban es:
 	pip3 install -e . vagy py -m pip install -e .
 	Ez felrakja editable modban packagekent.
 
