@@ -23,10 +23,8 @@ class MonthlyAverageCalculator (object):
 
 	def calculate (self, year, month, useCache=False):
 		if useCache:
-			if not str(year) in self._dict:
-				self._dict[str(year)] = dict ()
-			if str (month) in self._dict[str (year)]:
-				return self._dict[str (year)][str (month)]
+			if not str(year) in self._dict: self._dict[str(year)] = dict ()
+			if str (month) in self._dict[str (year)]: return self._dict[str (year)][str (month)]
 
 		return self._calculate_with_retries (retryCount=10, year=year, month=month, useCache=useCache)
 
@@ -42,11 +40,9 @@ class MonthlyAverageCalculator (object):
 				data_response = ecb.data(resource_id = 'EXR', key={'CURRENCY': ['HUF', 'EUR']}, params = {'startPeriod': startPeriod, 'endPeriod': endPeriod, 'use_cache': True}, dsd=ecb.dataflow('EXR').structure.ECB_EXR1)
 				data = data_response.data
 				sum = 0.0
-				for s in data[0].series[0] :
-					sum += float (s.value)
+				for s in data[0].series[0] : sum += float (s.value)
 				retVal = sum / len (data[0].series[0]) if len (data) > 0 and len (data[0].series[0]) > 0 else 0
-				if useCache:
-					self._dict[str(year)][str (month)]= retVal
+				if useCache: self._dict[str(year)][str (month)]= retVal
 				return retVal
 			except Exception as e:
 				print (e)
@@ -63,18 +59,11 @@ def index():
 	
 	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=relevantYear, month=relevantMonth)
 	relevantAvg = monthlyAverageCalculator.calculate (year=relevantYear, month=relevantMonth, useCache=True)
-	if relevantAvg == -1:
-		currAvg = -1
-	else:
-		currAvg = monthlyAverageCalculator.calculate (year=now.year, month=now.month)
+	currAvg = -1 if relevantAvg == -1 else monthlyAverageCalculator.calculate (year=now.year, month=now.month)
 
 	prevMonth = now.month - 1 if now.month > 1 else 12
 	prevYear = now.year if prevMonth < 12 else now.year - 1
-	if relevantAvg == -1:
-		prevAvg = -1
-	else:
-		prevAvg = monthlyAverageCalculator.calculate (year=prevYear, month=prevMonth, useCache=True)
-	
+	prevAvg = -1 if relevantAvg == -1 else monthlyAverageCalculator.calculate (year=prevYear, month=prevMonth, useCache=True)
 	
 	refMonthName = datetime.date(refYear, refMonth, 1).strftime("%B")
 	relevantMonthName = datetime.date(relevantYear, relevantMonth, 1).strftime("%B")
