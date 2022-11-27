@@ -1,6 +1,5 @@
 import datetime
 import calendar
-from matplotlib.style import use
 import pandasdmx
 from flask import Flask, render_template#, request
 #import socket
