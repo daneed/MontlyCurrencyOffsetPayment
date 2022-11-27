@@ -1,6 +1,7 @@
-A script python 3-al fut
+A script python 3-al fut, tehát python 3 az kell hozzá.
 
 Telepites:
+        töldsd le az egész MontlyCurrencyOffsetPayment mappa tartalmát.
 	nyiss egy terminált a MontlyCurrencyOffsetPayment mappaban es:
 	pip3 install -e . vagy py -m pip install -e .
 	Ez felrakja editable modban packagekent.
@@ -13,4 +14,4 @@ Ajanlott szerkeszto a VSCode
 		1. View/Command Palette-t nyisd meg,
 		2. Ott a 'Python: Select Interpeter'-t válaszd, és állítsd át a python 3.6 felettire.
 
-Futtatás: py MontlyCurrencyOffsetPayment.py
+Futtatás: py MontlyCurrencyOffsetPayment.py. Vagy python3 MontlyCurrencyOffsetPayment.py. Vagy pyhton MontlyCurrencyOffsetPayment.py. Amelyik működik ezek közül.
