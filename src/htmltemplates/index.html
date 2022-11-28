@@ -171,7 +171,7 @@
 				{% endif %}
 				<td><b>{{"{:,}".format(amount * 1000)}} HUF</b></td>
 				{% if loop.index0 == 0 %}
-				<td rowspan="{{amounts|length}}"><b>} the Monthly Currency Offset Payment is:</b></td>
+				<td rowspan="{{amounts|length}}"><b>} the Monthly Currency Offset Payment is: {</b></td>
 				{% endif %}
 				<td><b>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</b></td>
 				<td>{{ "{:,}".format((amount * 10 * prevMcopRate)|round|int)}} HUF</td>
