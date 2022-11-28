@@ -155,9 +155,27 @@
 		<table>
 			{%set amounts = [100, 500, 800, 1000, 1200, 1500, 2000]%}
 			{% for amount in amounts %}
+			{% if loop.index0 == 0 %}
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><b>Current Month</b></td>
+					<td>Next Month</td>
+					<td><i>After Next Month (est.!)</i></td>
+				</tr>
+			{% endif %}
 			<tr>
-				<td>For {{"{:,}".format(amount * 1000)}} HUF, the Monthly Currency Offset Payment is:</td>
-				<td>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</td>
+				{% if loop.index0 == 0 %}
+				<td rowspan="{{amounts|length}}"><b>For {</b></td>
+				{% endif %}
+				<td><b>{{"{:,}".format(amount * 1000)}} HUF</b></td>
+				{% if loop.index0 == 0 %}
+				<td rowspan="{{amounts|length}}"><b>} the Monthly Currency Offset Payment is:</b></td>
+				{% endif %}
+				<td><b>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</b></td>
+				<td>{{ "{:,}".format((amount * 10 * prevMcopRate)|round|int)}} HUF</td>
+				<td><i>{{ "{:,}".format((amount * 10 * currMcopRate)|round|int)}} HUF</i></td>
 			</tr>
 			{% endfor %}
 		</table>
