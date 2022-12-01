@@ -105,7 +105,7 @@
 				</td>
 				<td class="SMALL RED">
 					{% if relevantAvg==-1 %}
-						ERROR
+						N/A
 					{% else %}
 						{{"%.2f"|format (relevantAvg)}}
 						{% if (useOverriddenRelevantAvg) %}
@@ -113,14 +113,14 @@
 						{% endif %}
 					{% endif %}
 				</td>
-				<td class="SMALL RED">{% if relevantAvg==-1 %}ERROR{% else %}{{relevantMcopRate}}{% endif %}</td>
+				<td class="SMALL RED">{% if relevantAvg==-1 %}N/A{% else %}{{relevantMcopRate}}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>
 					{{prevYear}}. {{prevMonth}} (previous month)
 				</td>
 				{% if prevAvg==-1 %}
-					<td class="SMALL RED">ERROR</td>
+					<td class="SMALL RED">N/A</td>
 				{% else %}
 					<td>
 						{{"%.2f"|format (prevAvg)}}
@@ -129,14 +129,14 @@
 						{% endif %}
 					</td>
 				{% endif %}
-				<td>{% if prevAvg==-1 %}ERROR{% else %}{{prevMcopRate}}{% endif %}</td>
+				<td>{% if prevAvg==-1 %}N/A{% else %}{{prevMcopRate}}{% endif %}</td>
 			</tr>
 			<tr>
 				<td>
 					<i>{{currYear}}. {{currMonth}} (actual month)</i>
 				</td>
 					{% if currAvg==-1 %}
-						<td class="SMALL RED">ERROR</td>
+						<td><i>N/A</i></td>
 					{% else %}
 						<td>
 							<i>{{"%.2f"|format (currAvg)}}</i>
@@ -146,11 +146,11 @@
 						</td>
 					{% endif %}
 				
-				<td><i>{% if currAvg==-1 %}ERROR{% else %}{{currMcopRate}}{% endif %}</i></td>
+				<td><i>{% if currAvg==-1 %}N/A{% else %}{{currMcopRate}}{% endif %}</i></td>
 			</tr>
 		</tbody>
 	</table>
-	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{currYear}}. {{currMonth}} is:</p> <p class="BIG RED">{% if relevantAvg==-1 %}ERROR{% else %}{{relevantMcopRate}}%{% endif %}</p>
+	<p class="MEDIUM">Monthly Currency Offset Payment Rate for {{currYear}}. {{currMonth}} is:</p> <p class="BIG RED">{% if relevantAvg==-1 %}N/A{% else %}{{relevantMcopRate}}%{% endif %}</p>
 	{% if relevantAvg !=-1 %}
 		<table>
 			{%set amounts = [100, 500, 800, 1000, 1200, 1500, 2000]%}
@@ -173,9 +173,9 @@
 				{% if loop.index0 == 0 %}
 				<td rowspan="{{amounts|length}}"><b>} the Monthly Currency Offset Payment is: {</b></td>
 				{% endif %}
-				<td><b>{{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF</b></td>
-				<td>{{ "{:,}".format((amount * 10 * prevMcopRate)|round|int)}} HUF</td>
-				<td><i>{{ "{:,}".format((amount * 10 * currMcopRate)|round|int)}} HUF</i></td>
+				<td><b>{% if relevantMcopRate==-1 %}N/A{% else %} {{ "{:,}".format((amount * 10 * relevantMcopRate)|round|int)}} HUF{% endif %} </b></td>
+				<td>{% if prevMcopRate==-1 %}N/A{% else %} {{ "{:,}".format((amount * 10 * prevMcopRate)|round|int)}} HUF{% endif %} </td>
+				<td><i>{% if currMcopRate==-1 %}N/A{% else %}{{ "{:,}".format((amount * 10 * currMcopRate)|round|int)}} HUF{% endif %}</i></td>
 			</tr>
 			{% endfor %}
 		</table>

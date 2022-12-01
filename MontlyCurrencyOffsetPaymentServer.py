@@ -24,7 +24,7 @@ class MonthlyAverageCalculator (object):
 			if not str(year) in self._dict: self._dict[str(year)] = dict ()
 			if str (month) in self._dict[str (year)]: return self._dict[str (year)][str (month)]
 
-		return self._calculate_with_retries (retryCount=10, year=year, month=month, useCache=useCache)
+		return self._calculate_with_retries (retryCount=5, year=year, month=month, useCache=useCache)
 
 	def _calculate_with_retries (self, retryCount, year, month, useCache) :
 		monthStr = f'{month}' if month > 9 else f'0{month}'
@@ -44,6 +44,7 @@ class MonthlyAverageCalculator (object):
 				return retVal
 			except Exception as e:
 				print (e)
+				if str (e) == "local variable 'element' referenced before assignment" : return -1
 		return -1
 		
 
@@ -75,6 +76,6 @@ def index():
 		prevYear=prevYear,prevMonth=prevMonthName, prevAvg=prevAvg,
 		currYear=now.year, currMonth=monthName, currAvg=currAvg)
 
-app.run (host="0.0.0.0", threaded=False,port=33333)
+app.run (host="0.0.0.0", threaded=False,port=33334)
 
 
