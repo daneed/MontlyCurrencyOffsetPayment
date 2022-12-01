@@ -43,7 +43,7 @@ class MonthlyAverageCalculator (object):
 				if useCache: self._dict[str(year)][str (month)]= retVal
 				return retVal
 			except Exception as e:
-				print (e)
+				print (f'exception jött:{e}')
 				if str (e) == "local variable 'element' referenced before assignment" : return -1
 		return -1
 		
