@@ -17,7 +17,7 @@ class MonthlyAverageCalculator (object):
 		self._dict = dict ()
 
 	def calculateRefAvg (self, year, month):
-		return 2022, 5, 385
+		return 2022, 5, 400
 
 	def calculate (self, year, month, useCache=False):
 		if useCache:
@@ -53,8 +53,8 @@ monthlyAverageCalculator = MonthlyAverageCalculator ()
 @app.route("/")
 def index():
 	now = datetime.datetime.now ()
-	relevantMonth = now.month - 2 if now.month > 2 else 12
-	relevantYear = now.year if relevantMonth < 12 else now.year - 1
+	relevantMonth = now.month - 2 if now.month > 2 else 12 if now.month == 2 else 11
+	relevantYear = now.year if relevantMonth < 11 else now.year - 1
 	
 	refYear, refMonth, refAvg = monthlyAverageCalculator.calculateRefAvg (year=relevantYear, month=relevantMonth)
 	relevantAvg = monthlyAverageCalculator.calculate (year=relevantYear, month=relevantMonth, useCache=True)
